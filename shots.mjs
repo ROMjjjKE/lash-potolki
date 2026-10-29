@@ -1,0 +1,14 @@
+import puppeteer from 'puppeteer-core';
+const b = await puppeteer.launch({ executablePath: '/usr/bin/google-chrome', args: ['--no-sandbox'] });
+const p = await b.newPage();
+await p.setViewport({ width: 1440, height: 900 });
+await p.goto('http://127.0.0.1:4240/lash-potolki/', { waitUntil: 'networkidle2' });
+await p.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; });
+await p.evaluate(() => document.fonts.ready);
+await new Promise(r => setTimeout(r, 900));
+await p.screenshot({ path: 'shots/l-hero.png' });
+const top = await p.evaluate(() => Math.round(document.querySelector('.samples__stage').getBoundingClientRect().top + window.scrollY));
+await p.evaluate(y => window.scrollTo({ top: y, behavior: 'instant' }), top + 1100);
+await new Promise(r => setTimeout(r, 900));
+await p.screenshot({ path: 'shots/l-samples.png' });
+await b.close();
