@@ -31,7 +31,7 @@ export default function Order() {
           {STEPS.map((s) => (
             <article className="order__item" key={s.n}>
               <span className="order__n num">{s.n}</span>
-              <h4>{s.title}</h4>
+              <h3>{s.title}</h3>
               <p>{s.text}</p>
             </article>
           ))}
